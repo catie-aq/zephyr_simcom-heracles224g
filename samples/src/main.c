@@ -9,7 +9,7 @@
 
 int main(void)
 {
-	const struct device *const dev = DEVICE_DT_GET_ANY(simcom_heracles224g);
+	const struct device *const dev = DEVICE_DT_GET(DT_ALIAS(heracles224g));
 	struct sensor_value value;
 
 	if (!device_is_ready(dev)) {

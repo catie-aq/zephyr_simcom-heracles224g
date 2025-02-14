@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) 2025 CATIE
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+ / {
+	aliases{
+		heracles224g = &zest_radio_heracles224g;
+	};
+};
+
+&sixtron_uart {
+	status = "okay";
+	current-speed = <115200>;
+	zest_radio_heracles224g: heracles224g {
+		compatible = "simcom,heracles224g";
+		status = "okay";
+	};
+};
