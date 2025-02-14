@@ -1,0 +1,10 @@
+# Copyright (c) 2025 CATIE
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig HERACLES224G
+    bool "SIMCom Heracles 224G LTE-M driver for Zephyr OS."
+    default y
+    depends on DT_HAS_SIMCOM_HERACLES224G_ENABLED
+    select SERIAL
+    help
+      Enable driver for SIMCom Heracles 224G LTE-M driver for Zephyr OS..

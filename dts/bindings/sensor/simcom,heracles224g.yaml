@@ -1,0 +1,9 @@
+# Copyright (c) 2025 CATIE
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+    SIMCom Heracles 224G LTE-M driver for Zephyr OS.
+
+compatible: "simcom,heracles224g"
+
+include: [sensor-device.yaml]
