@@ -3,18 +3,21 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+ #include <zephyr/dt-bindings/gpio/sixtron-header.h>
 
  / {
 	aliases{
-		heracles224g = &zest_radio_heracles224g;
+		modem-uart = &sixtron_uart;
+		modem = &zest_radio_heracles224g;
 	};
 };
 
 &sixtron_uart {
 	status = "okay";
 	current-speed = <115200>;
-	zest_radio_heracles224g: heracles224g {
+	zest_radio_heracles224g: modem {
 		compatible = "simcom,heracles224g";
 		status = "okay";
+		mdm-power-gpios = <&sixtron_connector DIO2 GPIO_ACTIVE_LOW>;
 	};
 };
