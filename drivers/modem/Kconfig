@@ -1,8 +1,90 @@
 # Copyright (c) 2025 CATIE
 # SPDX-License-Identifier: Apache-2.0
 
-if MODEM
+menuconfig MODEM_SIMCOM_HERACLES224G
+	bool "SIMCom Heracles 224G cellular modem driver"
+	default y
+	depends on DT_HAS_SIMCOM_HERACLES224G_ENABLED
+	depends on MODEM_CELLULAR
+	select MODEM_CMUX_DEFAULT_MTU_127
+	help
+	  Enable the SIMCom Heracles 224G (GSM / LTE Cat-M1 / NB-IoT) modem
+	  driver. It is built on top of the Zephyr generic cellular modem
+	  framework (CMUX + PPP), so the modem exposes a native Zephyr network
+	  interface.
 
-rsource "simcom/Kconfig"
+if MODEM_SIMCOM_HERACLES224G
 
-endif # MODEM
+choice MODEM_SIMCOM_HERACLES224G_NETWORK_MODE
+	prompt "Preferred network mode (AT+CNMP)"
+	default MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_UNCHANGED
+	help
+	  Network mode configured at modem initialization. The value is saved
+	  by the modem in non-volatile memory.
+
+config MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_UNCHANGED
+	bool "Keep the modem setting"
+	help
+	  AT+CNMP is not sent: the modem uses its saved (or factory) setting.
+
+config MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_AUTO
+	bool "Automatic (AT+CNMP=2)"
+
+config MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_GSM
+	bool "GSM only (AT+CNMP=13)"
+
+config MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_LTE
+	bool "LTE only (AT+CNMP=38)"
+
+config MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_GSM_LTE
+	bool "GSM and LTE (AT+CNMP=51)"
+
+endchoice
+
+config MODEM_SIMCOM_HERACLES224G_SET_NETWORK_MODE
+	bool
+	default y if !MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_UNCHANGED
+
+config MODEM_SIMCOM_HERACLES224G_CNMP_VALUE
+	int
+	default 2 if MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_AUTO
+	default 13 if MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_GSM
+	default 38 if MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_LTE
+	default 51 if MODEM_SIMCOM_HERACLES224G_NETWORK_MODE_GSM_LTE
+	default 0
+
+choice MODEM_SIMCOM_HERACLES224G_LTE_TECH
+	prompt "Preferred LTE technology (AT+CMNB)"
+	default MODEM_SIMCOM_HERACLES224G_LTE_TECH_UNCHANGED
+	help
+	  LTE technology configured at modem initialization. The value is
+	  saved by the modem in non-volatile memory.
+
+config MODEM_SIMCOM_HERACLES224G_LTE_TECH_UNCHANGED
+	bool "Keep the modem setting"
+	help
+	  AT+CMNB is not sent: the modem uses its saved (or factory) setting.
+
+config MODEM_SIMCOM_HERACLES224G_LTE_TECH_CATM
+	bool "LTE Cat-M1 (AT+CMNB=1)"
+
+config MODEM_SIMCOM_HERACLES224G_LTE_TECH_NBIOT
+	bool "NB-IoT (AT+CMNB=2)"
+
+config MODEM_SIMCOM_HERACLES224G_LTE_TECH_CATM_NBIOT
+	bool "LTE Cat-M1 and NB-IoT (AT+CMNB=3)"
+
+endchoice
+
+config MODEM_SIMCOM_HERACLES224G_SET_LTE_TECH
+	bool
+	default y if !MODEM_SIMCOM_HERACLES224G_LTE_TECH_UNCHANGED
+
+config MODEM_SIMCOM_HERACLES224G_CMNB_VALUE
+	int
+	default 1 if MODEM_SIMCOM_HERACLES224G_LTE_TECH_CATM
+	default 2 if MODEM_SIMCOM_HERACLES224G_LTE_TECH_NBIOT
+	default 3 if MODEM_SIMCOM_HERACLES224G_LTE_TECH_CATM_NBIOT
+	default 0
+
+endif # MODEM_SIMCOM_HERACLES224G

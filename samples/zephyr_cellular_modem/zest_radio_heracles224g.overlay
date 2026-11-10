@@ -1,0 +1,13 @@
+/*
+ * Copyright (c) 2026 CATIE
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+ZEST_RADIO_HERACLES224G(1)
+
+/ {
+	aliases {
+		modem = &heracles224g_zest_radio_heracles224g_1;
+	};
+};

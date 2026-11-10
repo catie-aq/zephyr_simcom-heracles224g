@@ -1,8 +1,9 @@
 sample:
-  name: Heracles224G cellular sensor sample
+  name: SIMCom Heracles 224G cellular modem sample
 tests:
   sample.default:
-    tags: sensor
+    tags:
+      - modem
+      - net
     integration_platforms:
       - zest_core_stm32l4a6rg
-    depends_on: YOUR_TAG_HERE

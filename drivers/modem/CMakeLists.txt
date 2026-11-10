@@ -1,4 +1,6 @@
 # Copyright (c) 2025 CATIE
 # SPDX-License-Identifier: Apache-2.0
 
-add_subdirectory(simcom)
+zephyr_library()
+
+zephyr_library_sources(cellular_simcom_heracles224g.c)
