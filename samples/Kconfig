@@ -1,0 +1,14 @@
+# Copyright (c) 2026 CATIE
+# SPDX-License-Identifier: Apache-2.0
+
+mainmenu "SIMCom Heracles 224G sample"
+
+config SAMPLE_ECHO_HOSTNAME
+	string "TCP echo server host name"
+	default "tcpbin.com"
+
+config SAMPLE_ECHO_PORT
+	int "TCP echo server port"
+	default 4242
+
+source "Kconfig.zephyr"

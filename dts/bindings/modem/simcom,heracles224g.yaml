@@ -2,13 +2,19 @@
 # SPDX-License-Identifier: Apache-2.0
 
 description: |
-    Simcom Heracles224G modem.
+  SIMCom Heracles 224G GSM / LTE Cat-M1 / NB-IoT modem
+
+  The modem is driven through the Zephyr generic cellular modem framework
+  (CMUX + PPP).
 
 compatible: "simcom,heracles224g"
 
-include: uart-device.yaml
+include: zephyr,cellular-modem-device.yaml
 
 properties:
   mdm-power-gpios:
     type: phandle-array
     required: true
+    description: |
+      GPIO driving the modem PWRKEY. The logical active level must pull
+      PWRKEY low (power-on pulse > 1 s, power-off pulse > 1.5 s).
